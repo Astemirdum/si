@@ -3,14 +3,14 @@ module github.com/Astemirdum/si
 go 1.22
 
 require (
-	github.com/alecthomas/kong v0.9.0
 	github.com/alecthomas/participle/v2 v2.0.0-beta.5
-	github.com/alecthomas/repr v0.4.0
 	github.com/llir/llvm v0.3.6
 	github.com/stretchr/testify v1.8.1
 )
 
 require (
+	github.com/alecthomas/assert/v2 v2.6.0 // indirect
+	github.com/alecthomas/repr v0.4.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/mewmew/float v0.0.0-20211212214546-4fe539893335 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
