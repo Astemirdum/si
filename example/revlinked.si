@@ -1,0 +1,55 @@
+type struct {
+		i64 data,
+		Node *next,
+	} Node;
+
+i64 printf(i8 *fmt,... );
+i8* malloc(i64 size);
+
+
+Node* reverseList(Node* head) {
+    Node* prev = (Node*)NULL;
+    Node* current = head;
+    Node* next = (Node*)NULL;
+
+    while (current != (Node*)NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    return prev;
+}
+
+i64 printList(Node* node) {
+    while (node != (Node*)NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+    return 0;
+}
+
+Node* newNode(i64 data) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    node->data = data;
+    node->next = (Node*)NULL;
+    return node;
+}
+
+i64 main() {
+    Node* head = newNode(1);
+    head->next = newNode(2);
+    head->next->next = newNode(3);
+    head->next->next->next = newNode(4);
+
+    printf("Original list: ");
+    printList(head);
+
+    head = reverseList(head);
+
+    printf("Reversed list: ");
+    printList(head);
+
+    return 0;
+}

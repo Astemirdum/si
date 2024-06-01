@@ -1,0 +1,30 @@
+i64 printf(i8 *fmt, ...);
+
+i8* strrev(i8 *s) {
+    i8 *p = s;
+    i8 *q = s;
+    i8 tmp;
+
+    while (*q != (i8)0) {
+        q++;
+    }
+
+    q--;
+
+    while (p < q) {
+        tmp = *p;
+        *p = *q;
+        *q = tmp;
+        p++;
+        q--;
+    }
+
+    return s;
+}
+
+i64 main() {
+    i8 *s = "hello";
+    printf("%s", strrev(s));
+
+    return 0;
+}

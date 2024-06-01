@@ -1,0 +1,18 @@
+i64 printf(i8 *fmt, ...);
+
+i64 fib(i64 n) {
+	if (n < 2) {
+		return n;
+	}
+
+	return fib(n - 1) + fib(n - 2);
+}
+
+i64 main() {
+	i64 i = 0;
+
+	while (i++ < 6)
+		printf("fib(%d) = %d\n", i, fib(i));
+
+	return 0;
+}

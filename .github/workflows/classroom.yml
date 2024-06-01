@@ -1,0 +1,62 @@
+name: GitHub Classroom Workflow
+on:
+  push:
+    branches:
+      - master
+
+env:
+  HELM_NAME:
+
+jobs:
+  build:
+#    if: github.repository == 'skip'
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set Up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.22
+
+      # Linter
+      - name: Install dependencies
+        run: |
+          go version
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.52.2
+      - name: Linter
+        run: |
+          make lint
+
+      - name: Go Format
+        run: gofmt -s -w . && git diff --exit-code
+      - name: Go Vet
+        run: go vet ./...
+      - name: Go Tidy
+        run: go mod tidy && git diff --exit-code
+      - name: Go Mod
+        run: go mod download
+      - name: Go Mod Verify
+        run: go mod verify
+
+      # unit-tests
+      - name: Test
+        run: make test
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        continue-on-error: true
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+          file: ./cover.out
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage.html
+
